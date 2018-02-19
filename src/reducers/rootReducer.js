@@ -1,7 +1,6 @@
 function rootReducer(
   state = { 
     address: '',
-    latlong: '',
     coffee: [], 
     banks: []
   }, action) 
@@ -10,8 +9,6 @@ function rootReducer(
   	//address
     case "CURRENT_ADDRESS":
       return Object.assign({}, state, { address: action.payload})
-    case "CURRENT_LATLONG":
-      return Object.assign({}, state, { latlong: action.payload})
     //coffee
     case "FETCHED_COFFEE":
       return Object.assign({}, state, { coffee: action.payload})

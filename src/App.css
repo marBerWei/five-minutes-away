@@ -1,4 +1,59 @@
 .App {
-  text-align: center;
+  text-align: left;
+ /* padding: 5%;*/
 }
 
+.search {
+	padding: 5% 0 5% 0;
+	/*border: 1px blue solid;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.search .image {
+	padding: 1%;
+	/*border: 1px green solid;*/
+}
+
+.search img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.search h1 {
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 64px;
+}
+
+.search .title{
+	padding-left: 4%;
+	/*border: 1px green solid;*/
+	display: block;
+    margin: 0 auto;
+}
+
+.search p {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 30px;
+}
+
+.weWork{
+	padding-left: 4%;
+	padding-right: 4%;
+}
+
+.nav{
+	padding: 1% 1%;
+	display: block;
+}
+
+.nav img{
+	max-height: 50px;
+}
+
+#everythingContainer {
+	padding: 0% 10%;
+}
