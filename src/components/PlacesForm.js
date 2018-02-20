@@ -46,9 +46,6 @@ class GoogleMaps extends Component {
     .then(el => this.handleSubmitCurrentLocation(walkOrDrive))
   }
 
-///////////////////////////// Geocodes location to give lat and lng and runs loadMap ///////////////////////////////
-///////////////////////////// Need to control submit occurring before place selected ///////////////////////////////
-
   handleSubmitCurrentLocation = (walkOrDrive) => {
     var currAdd = this.state.currentAddress
     let latlongStr = this.state.currentLocation.lat.toString() + "," + this.state.currentLocation.lng.toString()
@@ -71,9 +68,6 @@ class GoogleMaps extends Component {
     this.state.clicked.driving ? this.setState({clicked: {driving: false}}) : this.setState({clicked: {driving: true}}) 
     console.log('driving',this.state.clicked.driving)
   }
-
-
-//////////////////////////////////// Search Bar to render coordinates ///////////////////////////////
 
   render() {
     return (
