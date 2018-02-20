@@ -4,7 +4,7 @@
 }
 
 .search {
-	padding: 5%;
+	padding: 1%;
 }
 
 h1 h3 {
@@ -13,7 +13,7 @@ line-height: 30px;
 
 .search h1 {
 	font-family: 'PT Sans Narrow', sans-serif;
-	font-size: 64px;
+	font-size: 50px;
 }
 
 .search p {
@@ -32,7 +32,7 @@ line-height: 30px;
 }
 
 .behindImage {
-	padding: 2%;
+	padding: 1%;
 }
 
 .weWork:hover{
@@ -54,7 +54,7 @@ line-height: 30px;
 
 
 #everythingContainer {
-	padding: 5% 10%;
+	padding: 3% 5%;
 }
 
 #everythingContainer p{
