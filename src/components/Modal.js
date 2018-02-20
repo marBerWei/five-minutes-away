@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker
+} from "react-google-maps";
+import { compose, withProps } from "recompose";
+
+
 
 export default class MapModal extends Component {
+
   state = { modalOpen: false }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -9,16 +19,31 @@ export default class MapModal extends Component {
   handleClose = () => this.setState({ modalOpen: false })
 
   render() {
+  	const MyMapComponent = compose(
+	  withProps({
+	    googleMapURL:
+	      "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places",
+	    loadingElement: <div style={{ height: `100%` }} />,
+	    containerElement: <div style={{ height: `400px` }} />,
+	    mapElement: <div style={{ height: `100%` }} />
+	  }),
+	  withScriptjs,
+	  withGoogleMap
+	)(props => (
+	  <GoogleMap defaultZoom={15} defaultCenter={{ lat: this.props.location.lat, lng: this.props.location.lng }}>
+	    <Marker position={{ lat: this.props.location.lat, lng: this.props.location.lng }} />
+	  </GoogleMap>
+	))	
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}>{this.props.title}</Button>}
+        trigger={<Icon style={{color:'rgb(255,202,98)'}} size="large" name='map' onClick={this.handleOpen}/>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
         size='large'
       >
-        <Modal.Content>
-        	<object data={"https://www.google.com/maps/place/Blue+Bottle+Coffee/@40.6873504,-73.9919132"} width="100%" height="500"></object>
+        <Modal.Content object>
+        	<MyMapComponent/>
         </Modal.Content>
         <Modal.Actions>
           <Button color='green' onClick={this.handleClose} inverted>
@@ -29,3 +54,5 @@ export default class MapModal extends Component {
     )
   }
 }
+
+// <object data={"https://www.google.com/maps/place/Blue+Bottle+Coffee/@40.6873504,-73.9919132"} width="100%" height="500"></object>

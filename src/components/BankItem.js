@@ -1,5 +1,6 @@
 import React from 'react'
 import {List} from 'semantic-ui-react'
+import MapModal from './Modal'
 
 class BankItem extends React.Component {
 	render(){
@@ -7,7 +8,8 @@ class BankItem extends React.Component {
 		return(
 			<List.Item>
 				<List.Content floated='right'>
-					{dist} 
+					<List.Header>{dist}</List.Header>
+					<List.Description><MapModal location={this.props.bank.location}/></List.Description>
 				</List.Content>
 				<List.Content floated='left'>
 					<List.Header>{this.props.bank.name}</List.Header>

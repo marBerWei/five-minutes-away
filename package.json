@@ -6,6 +6,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-google-autocomplete": "^1.0.15",
+    "react-google-maps": "^9.4.5",
     "react-places-autocomplete": "^6.1.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
