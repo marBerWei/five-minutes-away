@@ -6,7 +6,7 @@ import {
   NavLink,
   withRouter
 } from "react-router-dom";
-import { Divider } from 'semantic-ui-react'
+import { Divider} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import './App.css';
 
@@ -20,7 +20,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="nav">
-          <img onClick={this.handleClick} className="weWork" src={require('./weworklogo.png')}/>
+          <div className= "behindImage">
+            <img onClick={this.handleClick} className="weWork" src={require('./weworklogo.png')}/>
+          </div>
         </div>
         <Divider/>
         <Route exact path="/" component={Search}/>

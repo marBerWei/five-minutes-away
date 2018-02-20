@@ -6,10 +6,10 @@ class CoffeeItem extends React.Component {
 		let dist = ((this.props.coffee.location.distance) * 0.000621371).toString().slice(0,4)
 		return(
 			<List.Item>
-				<List.Content floated='center'>
+				<List.Content floated='right'>
 					{dist} 
 				</List.Content>
-				<List.Content floated='right'>
+				<List.Content floated='left'>
 					{this.props.coffee.name}
 				</List.Content>
 			</List.Item>

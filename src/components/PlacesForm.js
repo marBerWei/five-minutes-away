@@ -1,43 +1,39 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
-
 import Autocomplete from 'react-google-autocomplete'
 import { geocodeByAddress} from 'react-places-autocomplete'
-import { Dropdown, Input, Button, Header, Image, Grid } from 'semantic-ui-react';
+import { Input, Button, Form, Label} from 'semantic-ui-react';
 import { fetchBanks } from './../actions/bank'
 import { fetchCoffee } from './../actions/coffee'
-import { setCurrentAddress } from './../actions/address'
+import { setCurrentAddress, setWalkingOrDriving } from './../actions/address'
 import { connect } from 'react-redux'
 import {withRouter} from "react-router-dom";
 
 
 
 class GoogleMaps extends Component {
-  constructor(){
-    super()
 
-    this.state = {
+    state = {
       currentAddress: '',
       currentLocation: {
         lat: null,
         lng: null
+      },
+      clicked: { 
+        
       }
     }
 
-    this.handleCurrentAddress = this.handleCurrentAddress.bind(this);
-    this.handleSubmitCurrentLocation = this.handleSubmitCurrentLocation.bind(this);
-    this.handleGeoCode = this.handleGeoCode.bind(this);
-  }
 
-  handleCurrentAddress (event) {
+  handleCurrentAddress = (event) => {
     event.preventDefault();
     this.setState({currentAddress: event.target.value});
     // 	console.log(latlongStr)
   }
 
-  handleGeoCode (event) {
+  handleGeoCode = (event) => {
   	event.preventDefault()
+    let walkOrDrive = Object.keys(this.state.clicked)[0]
   	geocodeByAddress(this.state.currentAddress, (err, latLng) => {
       if(err) {
         console.log('Error with geocoding: ', err);
@@ -47,54 +43,69 @@ class GoogleMaps extends Component {
       }
       
     })
-    .then(el => this.handleSubmitCurrentLocation(event))
+    .then(el => this.handleSubmitCurrentLocation(walkOrDrive))
   }
 
 ///////////////////////////// Geocodes location to give lat and lng and runs loadMap ///////////////////////////////
 ///////////////////////////// Need to control submit occurring before place selected ///////////////////////////////
 
-  handleSubmitCurrentLocation() {
-    // event.preventDefault();
-    
-    //fetch coffee/banks based on address using this.state.currentAdress
-    //at end of fetch, update the payload have cofee/banks
-    //add the state to the payload and make it the currentAddress in redux
-    console.log(this.state)
+  handleSubmitCurrentLocation = (walkOrDrive) => {
     var currAdd = this.state.currentAddress
-    //this.props.setCurrentLatLong(latlongStr)
-    //this.props.setCurrentAddress(this.state.currentAddress)
     let latlongStr = this.state.currentLocation.lat.toString() + "," + this.state.currentLocation.lng.toString()
     console.log(this.props)
-    this.props.fetchBanks(latlongStr)
-   	this.props.fetchCoffee(latlongStr)
+    this.props.fetchBanks(latlongStr, walkOrDrive)
+   	this.props.fetchCoffee(latlongStr, walkOrDrive)
     this.props.setCurrentAddress(currAdd)
+    this.props.setWalkingOrDriving(Object.keys(this.state.clicked)[0])
     this.props.history.push("/results")
   }
+
+  handleWalking = (e) =>{
+    e.preventDefault()
+    this.state.clicked.walking ? this.setState({clicked: {walking: false}}) : this.setState({clicked: {walking: true}}) 
+    console.log('walking',this.state.clicked.walking)
+  }
+
+  handleDriving = (e) =>{
+    e.preventDefault()
+    this.state.clicked.driving ? this.setState({clicked: {driving: false}}) : this.setState({clicked: {driving: true}}) 
+    console.log('driving',this.state.clicked.driving)
+  }
+
 
 //////////////////////////////////// Search Bar to render coordinates ///////////////////////////////
 
   render() {
     return (
-      <div style={{textAlign:'center'}}>
-        <form onSubmit={this.handleGeoCode}>
-          <Input size="massive" placeholder="Enter Your Location">
-            <Autocomplete
-              style={{width: 700}}
-              onChange={this.handleCurrentAddress}
-              // onSubmit={}
-              onPlaceSelected={(place) => {
-                console.log(place);
-                this.setState({currentAddress: place.formatted_address})
-              }}
-              types={['address']}
-              componentRestrictions={{country: "USA"}}
-            />
-          </Input>
-          <Button size="massive" >Submit</Button>
-        </form>
-        <br/>
-
-      </div>
+        <div>
+        <p>Check for banks and coffee shops under 
+          <br/>five minutes from anywhere
+        </p>
+        <p>Select One:</p>
+        <Form onSubmit={this.handleGeoCode}>
+          <Form.Group grouped>
+            <Form.Checkbox slider onClick={this.handleWalking} style={{fontSize: 30}} label='Walking' />
+            <Form.Checkbox slider onClick={this.handleDriving} style={{fontSize: 30}} label='Driving' />
+          </Form.Group>
+          <br/>
+          <Form.Group>
+            <Form.Input size="massive" placeholder="Enter Your Location">
+              <Autocomplete
+                style={{width: 500}}
+                onChange={this.handleCurrentAddress}
+                // onSubmit={}
+                onPlaceSelected={(place) => {
+                  console.log(place);
+                  this.setState({currentAddress: place.formatted_address})
+                }}
+                types={['address']}
+                componentRestrictions={{country: "USA"}}
+              />
+            </Form.Input>
+          </Form.Group>
+          <Form.Button style={{backgroundColor: `rgb(255,202,98)`}} size="massive">Submit</Form.Button>
+        </Form>
+        </div>
     );
   }
 
@@ -103,14 +114,17 @@ class GoogleMaps extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchBanks: (address) => {
-      dispatch(fetchBanks(address))
+    fetchBanks: (address, walkOrDrive) => {
+      dispatch(fetchBanks(address, walkOrDrive))
     },
-    fetchCoffee: (address) => {
-      dispatch(fetchCoffee(address))
+    fetchCoffee: (address, walkOrDrive) => {
+      dispatch(fetchCoffee(address, walkOrDrive))
     },
     setCurrentAddress: (str)=> {
     	dispatch(setCurrentAddress(str))
+    },
+    setWalkingOrDriving: (str)=> {
+      dispatch(setWalkingOrDriving(str))
     }
   }
 }

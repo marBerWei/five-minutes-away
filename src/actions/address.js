@@ -4,3 +4,11 @@ export function setCurrentAddress(str) {
     payload: str
   }
 }
+
+export function setWalkingOrDriving(str) {
+  return {
+    type: "WALKING_DRIVING",
+    payload: str
+  }
+}
+

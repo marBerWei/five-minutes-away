@@ -1,19 +1,27 @@
 import React from 'react'
 import CoffeeList from './CoffeeList'
 import { connect } from 'react-redux'
-import { Segment} from 'semantic-ui-react'
-
+import { Segment, Icon} from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom'
 class CoffeeContainer extends React.Component {
 
 	render(){
-		console.log(this.props.coffee)
+		if(this.props.coffee.length > 0){
 		return(
-			<Segment>
-				<h1>Coffee</h1>
-				<br/>
+			<Segment raised>
+				<h1>Coffee <Icon name="coffee" size='large'/></h1>
+
 				<CoffeeList coffee={this.props.coffee}/>
 			</Segment>
 		)
+	} else {
+		return(
+			<Segment raised>
+				<h1>Coffee <Icon name="coffee" size='large'/></h1>
+				<p>Oh man! <br/> No coffee shops 5 minutes away....</p>
+				<h1><Link to='/'>Try another address</Link></h1>
+			</Segment>)
+	}
 	}
 }
 function mapStateToProps(state) {
@@ -22,4 +30,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(CoffeeContainer)
+export default withRouter(connect(mapStateToProps)(CoffeeContainer))

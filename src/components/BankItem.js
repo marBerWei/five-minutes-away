@@ -6,11 +6,11 @@ class BankItem extends React.Component {
 		let dist = ((this.props.bank.location.distance) * 0.000621371).toString().slice(0,4)
 		return(
 			<List.Item>
-				<List.Content floated='center'>
-					{dist}
-				</List.Content>
 				<List.Content floated='right'>
-					{this.props.bank.name}
+					{dist} 
+				</List.Content>
+				<List.Content floated='left'>
+					{this.props.bank.name} 
 				</List.Content>
 			</List.Item>
 		)

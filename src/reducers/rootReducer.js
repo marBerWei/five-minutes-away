@@ -1,11 +1,15 @@
 function rootReducer(
   state = { 
     address: '',
+    walkingOrDriving: '',
     coffee: [], 
     banks: []
   }, action) 
   {
   switch (action.type) {
+    //walking or driving
+    case "WALKING_DRIVING":
+      return Object.assign({}, state, { walkingOrDriving: action.payload})
   	//address
     case "CURRENT_ADDRESS":
       return Object.assign({}, state, { address: action.payload})
