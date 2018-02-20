@@ -3,12 +3,21 @@ import { Segment, Divider, Label } from 'semantic-ui-react'
 import BankContainer from './BankContainer'
 import CoffeeContainer from './CoffeeContainer'
 import {connect} from 'react-redux'
-const EverythingContainer = props => {
+import { withRouter } from 'react-router-dom'
+class EverythingContainer extends React.Component {
+
+	componentDidMount(){
+		if(!(this.props.address)){
+			this.props.history.push('/')
+			console.log('hitting this')
+		}
+	}
 	
-	let verb = props.walkingOrDriving === "walking" ? "walk" : "drive"
+	render(){
+	let verb = this.props.walkingOrDriving === "walking" ? "walk" : "drive"
 	return(
 			<div id="everythingContainer">
-				<p>Top Results: 5 min <em><b>{props.walkingOrDriving}</b></em> distance from <br/> {props.address}</p>
+				<p>Top Results: 5 min <em><b>{this.props.walkingOrDriving}</b></em> distance from <br/> {this.props.address}</p>
 				<Segment.Group horizontal >
 					<BankContainer/>
 					<Divider/>
@@ -18,6 +27,7 @@ const EverythingContainer = props => {
 		
 	)
 }
+}
 
 function mapStateToProps(state) {
   return {
@@ -26,4 +36,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(EverythingContainer)
+export default withRouter(connect(mapStateToProps)(EverythingContainer))

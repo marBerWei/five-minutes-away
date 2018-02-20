@@ -10,7 +10,9 @@ class BankItem extends React.Component {
 					{dist} 
 				</List.Content>
 				<List.Content floated='left'>
-					{this.props.bank.name} 
+					<List.Header>{this.props.bank.name}</List.Header>
+					<List.Description>{this.props.bank.location.formattedAddress[0]}</List.Description>
+					<List.Description>{this.props.bank.location.formattedAddress[1]}</List.Description>
 				</List.Content>
 			</List.Item>
 		)
